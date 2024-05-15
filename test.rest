@@ -8,7 +8,7 @@ Content-Type: application/json
 POST http://127.0.0.1:8000/signup
 Content-Type: application/json
 
-{ "username": "laravel", "password": "Pass1234!", "email": "lara@gmail.com" }
+{ "username": "sarvar1", "password": "Pass1234!", "email": "lara@gmail.com" }
 
 ###
 GET http://127.0.0.1:8000/test_token

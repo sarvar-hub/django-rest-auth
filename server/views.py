@@ -15,7 +15,9 @@ def login(request):
     return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
   token, create = Token.objects.get_or_create(user=user)
   serializer = UserSerializer(instance=user)
-  return Response({"token": token.key, "user": serializer.data})
+  user_data = serializer.data
+  user_data['token'] = token.key
+  return Response(user_data)
 
 
 @api_view(['POST'])
@@ -27,7 +29,9 @@ def signup(request):
     user.set_password(request.data['password'])
     user.save()
     token = Token.objects.create(user=user)
-    return Response({"token": token.key, "user": serializer.data})
+    user_data = serializer.data
+    user_data['token'] = token.key
+    return Response(user_data)
   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 from rest_framework.decorators import authentication_classes, permission_classes
