@@ -41,5 +41,15 @@ from rest_framework.permissions import IsAuthenticated
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def test_token(request):
-  return Response("passed for {}".format(request.user.email))
+def user(request):
+    user = request.user
+    token = Token.objects.get(user=user)
+    
+    user_data = {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'token': token.key
+    }
+    return Response(user_data)
+
